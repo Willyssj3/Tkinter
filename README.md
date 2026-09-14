@@ -26,7 +26,6 @@ main.py         # arma las entidades (campos, tabla, relaciones) e inicia la ven
 crud_frame.py    # clase genérica CRUDFrame (Tkinter): formulario, tabla y botones
 repository.py    # clase genérica Repository (sqlite3): acceso a datos, sin Tkinter
 PRUEBAS.md       # reporte de casos de prueba ejecutados
-GUIA_ESTUDIO.md  # guía de repaso para la defensa oral
 ```
 
 ## Diseño
@@ -42,5 +41,4 @@ GUIA_ESTUDIO.md  # guía de repaso para la defensa oral
   (incluida la relación Vehículo → Propietario vía `propietario_id`) e
   instancia `CRUDFrame` dos veces, una por entidad.
 
-Ver [PRUEBAS.md](PRUEBAS.md) para el detalle de los casos de prueba y
-[GUIA_ESTUDIO.md](GUIA_ESTUDIO.md) para preparar la defensa oral.
+Ver [PRUEBAS.md](PRUEBAS.md) para el detalle de los casos de prueba.
