@@ -1,12 +1,11 @@
-"""Interfaz gráfica genérica de CRUD. No sabe nada de SQL ni de sqlite3."""
+# Clase que arma la ventana: formulario, tabla y botones, para cualquier entidad
 
 import tkinter as tk
 from tkinter import ttk, messagebox
 
 from repository import RegistroReferenciadoError
 
-# Un validador por tipo de entrada. Agregar un tipo nuevo (por ej. "email")
-# es sumar una entrada acá, no tocar el resto de la clase.
+# Reglas de qué se puede escribir en cada tipo de campo
 VALIDADORES = {
     "numero": lambda texto: texto == "" or texto.isdigit(),
     "alfanumerico": lambda texto: texto == "" or texto.isalnum(),
@@ -14,9 +13,8 @@ VALIDADORES = {
 
 
 class CRUDFrame(tk.Frame):
-    """Formulario + tabla + botones para una entidad. Genérica: todo lo que
-    la distingue (título, campos, acceso a datos) llega por parámetros."""
-
+    # Sirve para cualquier entidad: el título, los campos y el acceso a
+    # datos se reciben como parámetro, no están fijos en el código
     def __init__(self, master, titulo, campos, repository):
         super().__init__(master)
         self.campos = campos

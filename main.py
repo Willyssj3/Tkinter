@@ -1,4 +1,4 @@
-"""Punto de entrada: arma las entidades y arranca la ventana principal."""
+# Acá se arman las entidades (campos de cada una) y se abre la ventana
 
 import os
 import tkinter as tk
@@ -18,7 +18,7 @@ CAMPOS_PROPIETARIOS = [
 
 
 def crear_campos_vehiculos(repo_propietarios):
-    """Depende de repo_propietarios (ya creado) para armar el combo de la relación."""
+    # Necesita el repository de propietarios ya creado para armar el combo
     return [
         {"nombre": "patente", "etiqueta": "Patente", "sql": "patente TEXT NOT NULL", "tipo_entrada": "alfanumerico"},
         {"nombre": "marca", "etiqueta": "Marca", "sql": "marca TEXT NOT NULL", "tipo_entrada": "texto"},

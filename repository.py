@@ -1,24 +1,21 @@
-"""Acceso a datos genérico sobre SQLite. No sabe nada de Tkinter ni de la interfaz."""
+# Clase que maneja la base de datos SQLite: crear, buscar, modificar y borrar
 
 import os
 import sqlite3
 
 
 class RegistroReferenciadoError(Exception):
-    """Se lanza al intentar eliminar un registro del que dependen filas de otra tabla."""
+    # Se usa cuando no se puede borrar un registro porque otra tabla lo necesita
+    pass
 
 
 class Repository:
-    """CRUD genérico sobre una tabla SQLite.
-
-    La misma clase sirve para cualquier entidad: solo cambian los parámetros
-    del constructor (nombre de tabla y definición de columnas), nunca el código.
-    """
-
+    # Sirve para cualquier tabla: la tabla y las columnas se pasan por parámetro,
+    # así no hay que escribir una clase distinta para cada entidad
     def __init__(self, ruta_db, tabla, campos):
         self.tabla = tabla
         self.ruta_db = ruta_db
-        self.nombres_columnas = [campo["nombre"] for campo in campos]
+        self.nombres_columnas = [campo["nombre"] for campo in campos]  # solo los nombres
 
         carpeta = os.path.dirname(ruta_db)
         if carpeta:
@@ -43,6 +40,7 @@ class Repository:
             conexion.execute(sql)
 
     def crear(self, datos):
+        # Arma un INSERT con los nombres de columna guardados
         columnas = ", ".join(self.nombres_columnas)
         placeholders = ", ".join("?" for _ in self.nombres_columnas)
         valores = [datos[nombre] for nombre in self.nombres_columnas]
@@ -52,6 +50,7 @@ class Repository:
             return cursor.lastrowid
 
     def listar(self):
+        # Trae todos los registros de la tabla
         columnas = ", ".join(self.nombres_columnas)
         sql = f"SELECT id, {columnas} FROM {self.tabla} ORDER BY id"
         with self._conectar() as conexion:
@@ -59,6 +58,7 @@ class Repository:
         return [dict(fila) for fila in filas]
 
     def obtener(self, id_registro):
+        # Trae un solo registro por su id
         columnas = ", ".join(self.nombres_columnas)
         sql = f"SELECT id, {columnas} FROM {self.tabla} WHERE id = ?"
         with self._conectar() as conexion:
@@ -66,6 +66,7 @@ class Repository:
         return dict(fila) if fila else None
 
     def actualizar(self, id_registro, datos):
+        # Arma un UPDATE con los nuevos valores
         asignaciones = ", ".join(f"{nombre} = ?" for nombre in self.nombres_columnas)
         valores = [datos[nombre] for nombre in self.nombres_columnas] + [id_registro]
         sql = f"UPDATE {self.tabla} SET {asignaciones} WHERE id = ?"
@@ -73,6 +74,8 @@ class Repository:
             conexion.execute(sql, valores)
 
     def eliminar(self, id_registro):
+        # Si otra tabla depende de este registro, SQLite tira error y lo
+        # convertimos en uno más fácil de entender
         sql = f"DELETE FROM {self.tabla} WHERE id = ?"
         try:
             with self._conectar() as conexion:
