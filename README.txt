@@ -33,7 +33,7 @@ crud_frame.py     - clase generica CRUDFrame (Tkinter): formulario, tabla
 repository.py     - clase generica Repository (sqlite3): acceso a datos,
                     sin Tkinter
 ejecutar.bat      - lanzador para Windows (doble clic)
-PlanDePruebas.docx - reporte de casos de prueba ejecutados
+Plan de Pruebas.docx - reporte de casos de prueba ejecutados
 
 
 DISENO
@@ -52,4 +52,4 @@ DISENO
   (incluida la relacion Vehiculo -> Propietario via propietario_id) e
   instancia CRUDFrame dos veces, una por entidad.
 
-Ver PlanDePruebas.docx para el detalle de los casos de prueba.
+Ver "Plan de Pruebas.docx" para el detalle de los casos de prueba.
