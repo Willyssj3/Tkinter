@@ -118,7 +118,7 @@ class CRUDFrame(tk.Frame):
         if seleccion:
             self.tabla.selection_remove(seleccion)
 
-    # ---------- operaciones CRUD (usan self.repository, nunca SQL) ----------
+    # ---------- operaciones CRUD ----------
 
     def crear(self):
         datos = self._leer_formulario()
